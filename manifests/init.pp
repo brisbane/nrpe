@@ -14,14 +14,23 @@
 class nrpe inherits nrpe::params {  
   include nrpe::config
   
-  if $softwarenfs {
+  if $check_softwarenfs {
     
-    include nrpe::plugins::softwarenfs 
+    include nrpe::plugins::check_softwarenfs 
   }
   
   if $check_procs {
      include nrpe::plugins::check_procs
  }  
-   
+  if $check_disk {
+    include nrpe::plugins::check_disk    
+  }
 
+  if $check_ntp {
+    include nrpe::plugins::check_ntp    
+  }
+  
+  if $check_load {
+    include nrpe::plugins::check_load    
+  }
 }

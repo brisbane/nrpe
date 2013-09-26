@@ -19,6 +19,7 @@ if $config_nrpe {
 ## Remove default hardcoded commands from nrpe.cfg
 augeas {nrpecfg:
   context => "/files/etc/nagios/nrpe.cfg",
+  load_path => '/var/lib/puppet/lib/augeas/lenses',
   changes => " rm command",
   notify  =>  Service ["nrpe"]
  }
