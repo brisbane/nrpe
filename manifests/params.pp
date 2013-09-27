@@ -2,7 +2,9 @@ class nrpe::params {
   
   $version = hiera ('nrpe::params::version', 'UNSET')
   $config_nrpe = hiera ('nrpe::params::config_nrpe', true)
-  $nrpe_parameters = hiera ('nrpe::params::$nrpe_parameters', [])
+  $nrpe_parameters = hiera ('nrpe::params::nrpe_parameters', [])
+  
+  $put_offline = hiera ('nrpe::params::put_offline', false)
   
   $check_softwarenfs = hiera ('nrpe::params::check_softwarenfs', false)
   $check_softwarenfs_cmd = hiera ('nrpe::params::check_softwarenfs_cmd', 'check_softwarenfs')
@@ -17,7 +19,7 @@ class nrpe::params {
   $check_ntp_cmd = hiera ('nrpe::params::check_ntp_cmd','check_ntp -H ntp0.physics.ox.ac.uk')
   
   $check_load = hiera ('nrpe::params::check_load', true)
-  $check_load_cmd = hiera ('nrpe::params::check_load_cmd','check_load [-r] -w 1.6, 1.4, 1.2 -c 2, 1.8, 1.5')
+  $check_load_cmd = hiera ('nrpe::params::check_load_cmd','check_load -r -w 1.6, 1.4, 1.2 -c 2, 1.8, 1.5')
   
   case $::architecture {
     'x86_64', 'amd64': { $plugindir = '/usr/lib64/nagios/plugins' }
