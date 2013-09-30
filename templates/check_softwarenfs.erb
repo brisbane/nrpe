@@ -1,0 +1,47 @@
+#!/bin/bash
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+
+PROGNAME=`basename $0`
+
+# Reference inode number, will need updating if
+# the software area is replaced.
+#inoderef=47448069
+inoderef=2
+
+
+print_usage() {
+	echo "Usage: $PROGNAME"
+}
+
+
+print_help() {
+	echo -e "This plugin checks whether the /software area NFS is mounted and working.\n"
+	exit 0
+}
+
+case "$1" in
+	--help)
+		print_help
+		exit 0
+		;;
+	-h)
+		print_help
+		exit 0
+		;;
+	*)
+		inode=$(stat --format "%i" /software/. 2> /dev/null)
+		status=$?
+		if test $status -ne 0; then
+			echo "/software CRITICAL - statting error"
+			exit 2
+		elif [[ x"${inode}" != "x${inoderef}" ]] ; then 
+			echo "/software CRITICAL - wrong inode number"
+			exit 2
+		else 
+			echo "/software OK"
+			exit 0
+		fi
+		;;
+esac	
+
