@@ -2,13 +2,16 @@ class nrpe::params {
   
   $version = hiera ('nrpe::params::version', 'UNSET')
   $config_nrpe = hiera ('nrpe::params::config_nrpe', true)
-  $nrpe_parameters = hiera ('nrpe::params::$nrpe_parameters', [])
+  $nrpe_parameters = hiera ('nrpe::params::nrpe_parameters', [])
+  
+  $put_offline = hiera ('nrpe::params::put_offline', false)
   
   $check_softwarenfs = hiera ('nrpe::params::check_softwarenfs', false)
   $check_softwarenfs_cmd = hiera ('nrpe::params::check_softwarenfs_cmd', 'check_softwarenfs')
   
   $check_procs = hiera ('nrpe::params::check_procs', true)
-  $check_procs_cmd = hiera ('nrpe::params::check_procs_cmd', 'check_procs -w 9 -c 17 -s Z')
+  $check_zombie_cmd = hiera ('nrpe::params::check_zombie_cmd', 'check_procs -w 9 -c 17 -s Z')
+  $check_procs_cmd = hiera ('nrpe::params::check_procs_cmd', 'check_procs -w 3000 -c 6000')
   
   $check_disk = hiera ('nrpe::params::check_disk', true)
   $check_disk_cmd = hiera ('nrpe::params::check_disk_cmd', "check_disk -w 20% -c 5% -p / -p /var -p /usr/local -p /boot -p /tmp")
@@ -17,7 +20,7 @@ class nrpe::params {
   $check_ntp_cmd = hiera ('nrpe::params::check_ntp_cmd','check_ntp -H ntp0.physics.ox.ac.uk')
   
   $check_load = hiera ('nrpe::params::check_load', true)
-  $check_load_cmd = hiera ('nrpe::params::check_load_cmd','check_load [-r] -w 1.6, 1.4, 1.2 -c 2, 1.8, 1.5')
+  $check_load_cmd = hiera ('nrpe::params::check_load_cmd','check_load -r -w 1.6, 1.4, 1.2 -c 2, 1.8, 1.5')
   
   case $::architecture {
     'x86_64', 'amd64': { $plugindir = '/usr/lib64/nagios/plugins' }

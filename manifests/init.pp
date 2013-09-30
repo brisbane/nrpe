@@ -14,6 +14,10 @@
 class nrpe inherits nrpe::params {  
   include nrpe::config
   
+  if $put_offline {
+    include nrpe::eventhandler::put_offline
+  }
+  
   if $check_softwarenfs {
     
     include nrpe::plugins::check_softwarenfs 
