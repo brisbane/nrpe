@@ -1,21 +1,33 @@
-define nrpe::plugins::check_service ( 
-     $nagios_simple_checks_dir, 
-     $pluginsdir   )
+class nrpe::plugins::simple_checks inherits nrpe::params  {
+
+ define nrpe::plugins::check_service ( 
+     $simple_checks_dir, 
+     $plugindir,
+     $cmd_args = ''   )
  {
- notify { "$nagios_simple_checks_dir/$name" :} 
-  file { "$pluginsdir/$name":
+
+  file { "$plugindir/$name":
     mode    => "755",
-    source  => "$nagios_simple_checks_dir/$name",
+    source  => "$simple_checks_dir/$name",
     purge   => false,
     recurse => true,
-}
- nrpe::command { $name :
-  cmd => "$plugindir/$name"
+  }
+
+  if has_key($cmd_args, $name ) {  
+    $cmd_arg =  $cmd_args[$name]
+    nrpe::command { $name :
+    cmd => "$plugindir/$name $cmd_arg"
+    }
+  }
+  else  {
+    nrpe::command { $name :
+    cmd => "$plugindir/$name"
+    }
+  }
  }
-}
-class nrpe::plugins::simple_checks inherits nrpe::params  {
-  nrpe::plugins::check_service { $nrpe::params::simple_checks : 
-     nagios_simple_checks_dir => $nrpe::params::nagios_simple_checks_dir,
-     pluginsdir => $nrpe::params::pluginsdir 
+ nrpe::plugins::check_service { $nrpe::params::simple_checks : 
+     simple_checks_dir => $nrpe::params::simple_checks_dir,
+     plugindir => $nrpe::params::plugindir,
+     cmd_args => $nrpe::params::simple_checks_args
      }
 }
