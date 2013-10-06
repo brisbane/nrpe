@@ -16,12 +16,12 @@ class nrpe::plugins::simple_checks inherits nrpe::params  {
   if has_key($cmd_args, $name ) {  
     $cmd_arg =  $cmd_args[$name]
     nrpe::command { $name :
-    cmd => "$plugindir/$name $cmd_arg"
+    cmd => "$name $cmd_arg"
     }
   }
   else  {
     nrpe::command { $name :
-    cmd => "$plugindir/$name"
+    cmd => "$name"
     }
   }
  }

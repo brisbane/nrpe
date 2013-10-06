@@ -38,5 +38,8 @@ class nrpe inherits nrpe::params {
     include nrpe::plugins::check_load    
   }
   
+  if $check_users {
+    include nrpe::plugins::check_users    
+  }
   include nrpe::plugins::simple_checks
 }

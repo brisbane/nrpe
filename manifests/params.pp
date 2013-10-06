@@ -16,6 +16,9 @@ class nrpe::params {
   $check_disk = hiera ('nrpe::params::check_disk', true)
   $check_disk_cmd = hiera ('nrpe::params::check_disk_cmd', "check_disk -w 20% -c 5% -p / -p /var -p /usr/local -p /boot -p /tmp")
   
+  $check_users = hiera ('nrpe::params::check_users', false)
+  $check_users_cmd = hiera ('nrpe::params::check_users_cmd', 'check_users  -w 5 -c 10')
+  
   $check_ntp = hiera ('nrpe::params::check_ntp', true)
   $check_ntp_cmd = hiera ('nrpe::params::check_ntp_cmd','check_ntp -H ntp0.physics.ox.ac.uk')
   
