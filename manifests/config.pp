@@ -15,12 +15,15 @@ package { 'nrpe':
   }
 
 if $config_nrpe {
-
+    $changes_change = [
+                 "rm command",
+                 "set include_dir/dir '/etc/nrpe.d/'" ,
+               ]
 ## Remove default hardcoded commands from nrpe.cfg
-augeas {nrpecfg:
+augeas {nrpecfg_change:
   context => "/files/etc/nagios/nrpe.cfg",
   load_path => '/var/lib/puppet/lib/augeas/lenses',
-  changes => " rm command",
+  changes => $changes_change,
   notify  =>  Service ["nrpe"]
  }
 
