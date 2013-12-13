@@ -1,0 +1,54 @@
+#!/bin/bash
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+
+PROGNAME=`basename $0`
+
+nagiosbox=<%= nagios_server %>
+send_nsca_config=/etc/nagios/send_nsca.cfg
+
+print_usage() {
+        echo "Usage: $PROGNAME"
+}
+
+
+# check_yumupdate todo list:
+# - This script breaks if there are some obselete packaes. It is a bug in yum.
+
+print_help() {
+        echo -e "This plugin checks running kernel and available kernel.\n"
+        exit 0
+}
+
+case "$1" in
+        --help)
+                print_help
+                exit 0
+                ;;
+        -h)
+                print_help
+                exit 0
+                ;;
+        *)
+                # Run yum, all from cache, minimal errors, minimal debug output
+                running=`uname -r | rev | cut -c 8- | rev`
+                installed=`rpm -q kernel --last | awk 'NR==1 {print $1}' | cut -c 8- | rev | cut -c 8- | rev`
+                available=`yum -C -e0 -d0 check-update kernel | awk 'NR >1 {print $2}'`
+
+                if ( [ -z $available ] && [ "$running" == "$installed" ] ); then
+                        echo -e ${HOSTNAME}"\tKernel Update\t0\tKernel OK - Running latest Kernel\n" | /usr/sbin/send_nsca -H ${nagiosbox} -c ${send_nsca_config}
+                        exit 0
+                elif  [ -z $available ] && [ "$running" != "$installed" ]; then
+
+                        echo -e -n ${HOSTNAME}"\tKernel Update\t1\tWARNING - Recent Kernel Installed but not running, Reboot it: \n" | /usr/sbin/send_nsca -H ${nagiosbox} -c ${send_nsca_config}
+                        exit 1
+                elif   [ -n $available ]; then
+                       echo -e -n ${HOSTNAME}"\tKernel Update\t1\tCRITICAL - New Kernel Available: \n" | /usr/sbin/send_nsca -H ${nagiosbox} -c ${send_nsca_config}
+                       exit 2
+
+                else
+                        echo "UNKNOWN - something failed"
+                        exit 3
+                fi
+                ;;
+esac

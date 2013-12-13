@@ -1,0 +1,54 @@
+#!/bin/bash
+
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin
+
+PROGNAME=`basename $0`
+
+nagiosbox=<%= nagios_server %>
+send_nsca_config=/etc/nagios/send_nsca.cfg
+
+print_usage() {
+        echo "Usage: $PROGNAME"
+}
+
+
+
+print_help() {
+        echo -e "This plugin checks whether there are outstanding package updates with yum.\n"
+        exit 0
+}
+
+case "$1" in
+        --help)
+                print_help
+                exit 0
+                ;;
+        -h)
+                print_help
+                exit 0
+                ;;
+        *)
+                # Run yum, all from cache, minimal errors, minimal debug output
+                list=$(yum -C -e0 -d0 check-update)
+                status=$(echo "${list}" | wc -l)
+                if test ${status} -eq 1; then
+                        echo -e ${HOSTNAME}"\tYUM updates\t0\tYUM OK - no outstanding updates\n" | /usr/sbin/send_nsca -H ${nagiosbox} -c ${send_nsca_config}
+                        exit 0
+                elif test ${status} -lt 30; then
+                        # Check number of updates required for individual repos
+                        shortlist=$(echo "${list}" | awk 'NR>1 {repo[$3]++} ; END {for (n in repo) {print n, repo[n]}}')
+                        echo -e -n ${HOSTNAME}"\tYUM updates\t1\tWARNING - pending updates: "${shortlist}"\n" | /usr/sbin/send_nsca -H ${nagiosbox} -c ${send_nsca_config}
+                        exit 1
+                elif test ${status} -gt 30; then
+                        # Check number of updates required for individual repos
+                        shortlist=$(echo "${list}" | awk 'NR>1 {repo[$3]++} ; END {for (n in repo) {print n, repo[n]}}')
+                        echo -e -n ${HOSTNAME}"\tYUM updates\t1\tCRITICAL - pending updates: "${shortlist}"\n" | /usr/sbin/send_nsca -H ${nagiosbox} -c ${send_nsca_config}
+                        exit 2
+
+                else
+                        echo "UNKNOWN - error getting yum status"
+                        exit 3
+                fi
+                ;;
+esac
+                        
