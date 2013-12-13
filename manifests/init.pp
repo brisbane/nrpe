@@ -14,6 +14,10 @@
 class nrpe inherits nrpe::params {  
   include nrpe::config
   
+  if config_nsca {
+    include nrpe::config_nsca_client
+  }
+  
   if $put_offline {
     include nrpe::eventhandler::put_offline
   }
@@ -41,5 +45,14 @@ class nrpe inherits nrpe::params {
   if $check_users {
     include nrpe::plugins::check_users    
   }
+  
+  if $check_yumupdate {
+    include nrpe::nsca::check_yumupdate
+  }
+  
+  if $check_kernel {
+    include nrpe::nsca::check_kernel
+  }
+  
   include nrpe::plugins::simple_checks
 }

@@ -4,6 +4,14 @@ class nrpe::params {
   $config_nrpe = hiera ('nrpe::params::config_nrpe', true)
   $nrpe_parameters = hiera ('nrpe::params::nrpe_parameters', [])
   
+  $config_nsca   = hiera ('nrpe::params::config_nsca', true)
+  $nsca_password = hiera ('nrpe::params::nsca_password')
+  $nsca_encryption = hiera ('nrpe::params::nsca_encryption', '16')
+  $nagios_server   = hiera ('nrpe::params::nagios_server', 'UNSET')  
+  
+  $check_kernel = hiera ('nrpe::params::check_kernel', true)
+  $check_yumupdate = hiera ('nrpe::params::check_yumupdate', true)
+  
   $put_offline = hiera ('nrpe::params::put_offline', false)
   
   $check_softwarenfs = hiera ('nrpe::params::check_softwarenfs', false)
@@ -61,6 +69,7 @@ class nrpe::params {
       $pid_file         = '/var/run/nrpe/nrpe.pid'
       $nrpe_user        = 'nrpe'
       $nrpe_group       = 'nrpe'
+      $nsca_dir         = '/etc/nagios'
     }
 }
 }

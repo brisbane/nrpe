@@ -1,7 +1,6 @@
 class nrpe::plugins::softwarenfs inherits nrpe::params {
  
- $softwarenfs_cmd = $nrpe::params::softwarenfs_cmd 
-# package { 'nagios-plugins-softwarenfs' : ensure => present }
+ $softwarenfs_cmd = $nrpe::params::check_softwarenfs_cmd 
  
  file { "${nrpe::params::plugindir}/check_softwarenfs":
     
