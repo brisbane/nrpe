@@ -13,6 +13,8 @@
 # class nrpe inherits nrpe::params {
 class nrpe inherits nrpe::params {  
   include nrpe::config
+# puppet plugins require sudo access 
+  include nrpe::config_sudo
   
   if config_nsca {
     include nrpe::config_nsca_client

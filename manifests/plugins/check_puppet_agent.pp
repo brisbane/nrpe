@@ -1,8 +1,9 @@
 class nrpe::plugins::check_puppet_agent inherits nrpe::params {
  
  $check_puppet_agent_cmd = $nrpe::params::check_puppet_agent_cmd 
-
- 
+ # This plugin requires sudo access
+  
+  
  file { "${nrpe::params::plugindir}/check_puppet.rb":
     
     content => template('nrpe/check_puppet.rb'),
