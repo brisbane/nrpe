@@ -1,5 +1,5 @@
 ########################################
 # PUPPET MANAGED
 ########################################
-command[<%= cmdname %>] = <%= File.join(cwd, cmd) %>
+command[<%= cmdname %>] = <%= sudo %> <%= File.join(cwd, cmd) %>
 

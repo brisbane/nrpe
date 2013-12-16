@@ -18,18 +18,23 @@ class nrpe inherits nrpe::params {
     include nrpe::config_nsca_client
   }
   
+  
   if $put_offline {
     include nrpe::eventhandler::put_offline
   }
   
-  if $check_softwarenfs {
-    
+  if $check_puppet_agent {
+    include nrpe::plugins::check_puppet_agent
+  }
+  
+  if $check_softwarenfs {    
     include nrpe::plugins::check_softwarenfs 
   }
   
   if $check_procs {
      include nrpe::plugins::check_procs
- }  
+  }  
+ 
   if $check_disk {
     include nrpe::plugins::check_disk    
   }

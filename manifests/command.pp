@@ -2,7 +2,8 @@ define nrpe::command(
   $cmd,
   $cmdname=$name,
   $cwd=$nrpe::params::plugindir,
-  $ensure='present'
+  $ensure='present',
+  $sudo=''
 ) {
   case $ensure {
     absent,present: {}

@@ -1,25 +1,32 @@
 class nrpe::params {
   
   $version = hiera ('nrpe::params::version', 'UNSET')
+  
   $config_nrpe = hiera ('nrpe::params::config_nrpe', true)
+  
   $nrpe_parameters = hiera ('nrpe::params::nrpe_parameters', [])
   
   $config_nsca   = hiera ('nrpe::params::config_nsca', true)
-  $nsca_password = hiera ('nrpe::params::nsca_password')
-  $nsca_encryption = hiera ('nrpe::params::nsca_encryption', '16')
+  $nsca_password = hiera ('nrpe::params::nsca_password')  
+  $nsca_encryption = hiera ('nrpe::params::nsca_encryption', '16')  
   $nagios_server   = hiera ('nrpe::params::nagios_server', 'UNSET')  
   
   $check_kernel = hiera ('nrpe::params::check_kernel', true)
+  
   $check_yumupdate = hiera ('nrpe::params::check_yumupdate', true)
   
   $put_offline = hiera ('nrpe::params::put_offline', false)
   
-  $check_softwarenfs = hiera ('nrpe::params::check_softwarenfs', false)
+  $check_puppet_agent= hiera ('nrpe::params::check_puppet_agent', true)
+  $check_puppet_agent_cmd = hiera ('nrpe::params::check_puppet_agent_cmd', 'check_puppet.rb -w 3600 -c 7200')
+  
+  $check_softwarenfs = hiera ('nrpe::params::check_softwarenfs', false)  
   $check_softwarenfs_cmd = hiera ('nrpe::params::check_softwarenfs_cmd', 'check_softwarenfs')
   
-  $check_procs = hiera ('nrpe::params::check_procs', true)
-  $check_zombie_cmd = hiera ('nrpe::params::check_zombie_cmd', 'check_procs -w 9 -c 17 -s Z')
+  $check_procs = hiera ('nrpe::params::check_procs', true)  
   $check_procs_cmd = hiera ('nrpe::params::check_procs_cmd', 'check_procs -w 3000 -c 6000')
+  
+  $check_zombie_cmd = hiera ('nrpe::params::check_zombie_cmd', 'check_procs -w 9 -c 17 -s Z')
   
   $check_disk = hiera ('nrpe::params::check_disk', true)
   $check_disk_cmd = hiera ('nrpe::params::check_disk_cmd', "check_disk -w 20% -c 5% -p / -p /var -p /usr/local -p /boot -p /tmp")
