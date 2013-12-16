@@ -19,7 +19,13 @@ class nrpe::params {
   
   $check_puppet_agent= hiera ('nrpe::params::check_puppet_agent', true)
   $check_puppet_agent_cmd = hiera ('nrpe::params::check_puppet_agent_cmd', 'check_puppet.rb -w 3600 -c 7200')
+
+  $check_cvmfs_atlas= hiera ('nrpe::params::check_cvmfs_atlas', false)
+  $check_cvmfs_atlas_cmd = hiera ('nrpe::params::check_cvmfs_atlas_cmd', 'check_cvmfs atlas.cern.ch')
   
+  $check_cvmfs_lhcb= hiera ('nrpe::params::check_cvmfs_lhcb', false)
+  $check_cvmfs_lhcb_cmd = hiera ('nrpe::params::check_cvmfs_lhcb_cmd', 'check_cvmfs lhcb.cern.ch')
+
   $check_softwarenfs = hiera ('nrpe::params::check_softwarenfs', false)  
   $check_softwarenfs_cmd = hiera ('nrpe::params::check_softwarenfs_cmd', 'check_softwarenfs')
   

@@ -33,6 +33,15 @@ class nrpe inherits nrpe::params {
     include nrpe::plugins::check_softwarenfs 
   }
   
+  if $check_cvmfs_atlas {
+    include nrpe::plugins::check_cvmfs_atlas
+  }  
+  
+  if $check_cvmfs_lhcb {
+    include nrpe::plugins::check_cvmfs_lhcb
+  }
+ 
+ 
   if $check_procs {
      include nrpe::plugins::check_procs
   }  
