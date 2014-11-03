@@ -29,7 +29,7 @@ case "$1" in
                 ;;
         *)
                 # Run yum, all from cache, minimal errors, minimal debug output
-                list=$(yum -C -e0 -d0 check-update)
+                list=$(yum  -e0 -d0 check-update)
                 status=$(echo "${list}" | wc -l)
                 if test ${status} -eq 1; then
                         echo -e ${HOSTNAME}"\tYUM updates\t0\tYUM OK - no outstanding updates\n" | /usr/sbin/send_nsca -H ${nagiosbox} -c ${send_nsca_config}

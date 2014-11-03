@@ -7,7 +7,8 @@ class nrpe::params {
   $nrpe_parameters = hiera ('nrpe::params::nrpe_parameters', [])
   
   $config_nsca   = hiera ('nrpe::params::config_nsca', true)
-  $nsca_password = hiera ('nrpe::params::nsca_password')  
+  #All variables MUST be defined somewhere if puppet is to consider all modules valid in the kickstart run
+  $nsca_password = hiera ('nrpe::params::nsca_password', nil)  
   $nsca_encryption = hiera ('nrpe::params::nsca_encryption', '16')  
   $nagios_server   = hiera ('nrpe::params::nagios_server', 'UNSET')  
   
@@ -45,6 +46,9 @@ class nrpe::params {
   
   $check_load = hiera ('nrpe::params::check_load', true)
   $check_load_cmd = hiera ('nrpe::params::check_load_cmd','check_load -r -w 1.6, 1.4, 1.2 -c 2, 1.8, 1.5')
+ 
+  $check_http = hiera ('nrpe::params::check_http', false)
+  $check_http_cmd = hiera ('nrpe::params::check_http_cmd', 'check_http')
 
   #drop a executable file that acts as a nagios test into nrpe::params::nagios_simple_checks_dir path
   #then add that command name to to the list of simple_checks.  It will be called with the parameters listed in the hash

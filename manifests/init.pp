@@ -62,6 +62,10 @@ class nrpe inherits nrpe::params {
     include nrpe::plugins::check_users    
   }
   
+  if $check_http {
+    include nrpe::plugins::check_http
+  }
+
   if $check_yumupdate {
     include nrpe::nsca::check_yumupdate
   }

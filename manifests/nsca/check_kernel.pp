@@ -11,7 +11,7 @@ class nrpe::nsca::check_kernel inherits nrpe::params {
   cron {'passive_check_kernel':
     command  => "${nsca_dir}/passive_check_kernel",
     user     => root,
-    hour     => 6,
+    hour     => 5,
     minute  => 10,
     require => File["$nsca_dir/passive_check_kernel"]
   } 
