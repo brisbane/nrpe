@@ -62,6 +62,10 @@ class nrpe inherits nrpe::params {
     include nrpe::plugins::check_users    
   }
   
+  if $check_megaraid_sas {
+    include nrpe::plugins::check_megaraid_sas
+  }
+
   if $check_http {
     include nrpe::plugins::check_http
   }

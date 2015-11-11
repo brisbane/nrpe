@@ -21,6 +21,9 @@ class nrpe::params {
   $check_puppet_agent= hiera ('nrpe::params::check_puppet_agent', true)
   $check_puppet_agent_cmd = hiera ('nrpe::params::check_puppet_agent_cmd', 'check_puppet.rb -w 3600 -c 7200')
 
+  $check_megaraid_sas= hiera ('nrpe::params::check_megaraid_sas', true)
+  $check_megaraid_sas_cmd = hiera ('nrpe::params::check_megaraid_sas_cmd', 'check_megaraid_sas')
+
   $check_cvmfs_atlas= hiera ('nrpe::params::check_cvmfs_atlas', false)
   $check_cvmfs_atlas_cmd = hiera ('nrpe::params::check_cvmfs_atlas_cmd', 'check_cvmfs atlas.cern.ch')
   

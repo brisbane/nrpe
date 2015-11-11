@@ -1,5 +1,7 @@
 User_Alias NRPE = nrpe
-Cmnd_Alias NRPECOMMANDS = /usr/lib64/nagios/plugins/
+Cmnd_Alias NRPECOMMANDS = /usr/lib64/nagios/plugins/ 
 Defaults:nrpe !requiretty
 NRPE     ALL=(ALL)       NOPASSWD: NRPECOMMANDS
+NRPE     ALL=(ALL)       NOPASSWD: /opt/MegaRAID/MegaCli/MegaCli64
+
 
