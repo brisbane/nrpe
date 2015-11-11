@@ -33,7 +33,7 @@ class nrpe::params {
   $check_procs = hiera ('nrpe::params::check_procs', true)  
   $check_procs_cmd = hiera ('nrpe::params::check_procs_cmd', 'check_procs -w 3000 -c 6000')
   
-  $check_zombie_cmd = hiera ('nrpe::params::check_zombie_cmd', 'check_procs -w 9 -c 17 -s Z')
+  $check_zombie_cmd = hiera ('nrpe::params::check_zombie_cmd', 'check_procs -w 25 -c 40 -s Z')
   
   $check_disk = hiera ('nrpe::params::check_disk', true)
   $check_disk_cmd = hiera ('nrpe::params::check_disk_cmd', "check_disk -w 20% -c 5% -p / -p /var -p /usr/local -p /boot -p /tmp")
@@ -45,7 +45,7 @@ class nrpe::params {
   $check_ntp_cmd = hiera ('nrpe::params::check_ntp_cmd','check_ntp -H ntp0.physics.ox.ac.uk')
   
   $check_load = hiera ('nrpe::params::check_load', true)
-  $check_load_cmd = hiera ('nrpe::params::check_load_cmd','check_load -r -w 1.6, 1.4, 1.2 -c 2, 1.8, 1.5')
+  $check_load_cmd = hiera ('nrpe::params::check_load_cmd','check_load -r -w 99, 5, 3 -c 99, 10, 5')
  
   $check_http = hiera ('nrpe::params::check_http', false)
   $check_http_cmd = hiera ('nrpe::params::check_http_cmd', 'check_http')
