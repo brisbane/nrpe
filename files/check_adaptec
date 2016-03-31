@@ -1,0 +1,14 @@
+#!/bin/bash
+notok=(/opt/arcconf/cmdline/arcconf GETCONFIG 1 | grep "Status of logical device" | grep -v " Optimal$" | wc -l)
+if [ $notok -gt 0 ]; then
+  echo not ok  `/opt/arcconf/cmdline/arcconf GETCONFIG 1 | grep "Status of logical device" | grep -v " Optimal$"`
+  exit 1
+fi
+notok=$( /opt/arcconf/cmdline/arcconf GETCONFIG 1 LD | grep Segment | grep -v Present | wc -l )
+if [ $notok -gt 0 ]; then
+  echo not ok $( /opt/arcconf/cmdline/arcconf GETCONFIG 1 LD | grep Segment | grep -v Present )
+  exit 1
+else
+  echo OK
+  exit 0
+fi
