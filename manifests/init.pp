@@ -66,6 +66,10 @@ class nrpe inherits nrpe::params {
     include nrpe::plugins::check_megaraid_sas
   }
 
+  if $check_adaptec {
+    include nrpe::plugins::check_adaptec
+  }
+
   if $check_http {
     include nrpe::plugins::check_http
   }

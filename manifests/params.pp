@@ -24,6 +24,8 @@ class nrpe::params {
   $check_megaraid_sas= hiera ('nrpe::params::check_megaraid_sas', true)
   $check_megaraid_sas_cmd = hiera ('nrpe::params::check_megaraid_sas_cmd', 'check_megaraid_sas')
 
+  $check_adaptec = hiera ('nrpe::params::check_adaptec', false)
+  $check_adaptec_cmd = hiera ('nrpe::params::check_adaptec_cmd', 'check_adaptec')
   $check_cvmfs_atlas= hiera ('nrpe::params::check_cvmfs_atlas', false)
   $check_cvmfs_atlas_cmd = hiera ('nrpe::params::check_cvmfs_atlas_cmd', 'check_cvmfs atlas.cern.ch')
   
